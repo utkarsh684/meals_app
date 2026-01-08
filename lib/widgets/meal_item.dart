@@ -5,28 +5,24 @@ import 'package:meals_app/widgets/meal_item_trait.dart';
 import 'package:meals_app/screens/meals_details.dart';
 
 class MealItem extends StatelessWidget {
-  const MealItem({super.key, required this.meal,required this.onToggleFavorite});
-  
+  const MealItem({super.key, required this.meal});
+
   final Meal meal;
-  final void Function(Meal meal) onToggleFavorite;
 
   String get complexityText {
-    return meal.complexity.name[0].toUpperCase() + meal.complexity.name.substring(1);
+    return meal.complexity.name[0].toUpperCase() +
+        meal.complexity.name.substring(1);
   }
 
   String get affordibilityText {
-    return meal.affordability.name[0].toUpperCase() + meal.affordability.name.substring(1);
+    return meal.affordability.name[0].toUpperCase() +
+        meal.affordability.name.substring(1);
   }
 
-  void _toMealsDetails(BuildContext context,Meal meal){
+  void _toMealsDetails(BuildContext context, Meal meal) {
     Navigator.push(
-        context,
-        MaterialPageRoute(
-            builder: (ctx) => MealsDetails(
-              meal: meal,
-              onToggleFavorite: onToggleFavorite,
-            ),
-        ),
+      context,
+      MaterialPageRoute(builder: (ctx) => MealsDetails(meal: meal)),
     );
   }
 
@@ -38,14 +34,14 @@ class MealItem extends StatelessWidget {
       clipBehavior: Clip.hardEdge,
       elevation: 2,
       child: InkWell(
-        onTap: (){
-          _toMealsDetails(context,meal);
+        onTap: () {
+          _toMealsDetails(context, meal);
         },
         child: Stack(
           children: [
             FadeInImage(
-                placeholder: MemoryImage(kTransparentImage),
-                image: NetworkImage(meal.imageUrl),
+              placeholder: MemoryImage(kTransparentImage),
+              image: NetworkImage(meal.imageUrl),
               fit: BoxFit.cover,
               height: 500,
               width: double.infinity,
@@ -56,7 +52,7 @@ class MealItem extends StatelessWidget {
               bottom: 0,
               child: Container(
                 color: Colors.black54,
-                padding: EdgeInsets.symmetric(vertical: 6,horizontal: 44),
+                padding: EdgeInsets.symmetric(vertical: 6, horizontal: 44),
                 child: Column(
                   children: [
                     Text(
@@ -68,19 +64,29 @@ class MealItem extends StatelessWidget {
                       style: TextStyle(
                         fontSize: 20,
                         fontWeight: FontWeight.bold,
-                        color: Colors.white
-                      ),),
-                    const SizedBox(height: 12,),
+                        color: Colors.white,
+                      ),
+                    ),
+                    const SizedBox(height: 12),
                     Row(
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: [
-                        MealItemTrait(iconData: Icons.schedule, label: '${meal.duration} min'),
-                        SizedBox(width: 20,),
-                        MealItemTrait(iconData: Icons.work, label: complexityText),
-                        SizedBox(width: 20,),
-                        MealItemTrait(iconData: Icons.attach_money, label: affordibilityText),
+                        MealItemTrait(
+                          iconData: Icons.schedule,
+                          label: '${meal.duration} min',
+                        ),
+                        SizedBox(width: 20),
+                        MealItemTrait(
+                          iconData: Icons.work,
+                          label: complexityText,
+                        ),
+                        SizedBox(width: 20),
+                        MealItemTrait(
+                          iconData: Icons.attach_money,
+                          label: affordibilityText,
+                        ),
                       ],
-                    )
+                    ),
                   ],
                 ),
               ),
