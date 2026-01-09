@@ -1,7 +1,4 @@
-import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/legacy.dart';
-import 'package:meals_app/data/dummy_data.dart';
-import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:meals_app/models/meal.dart';
 
 class FavoriteMealsNotifier extends StateNotifier<List<Meal>> {

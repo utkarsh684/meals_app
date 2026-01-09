@@ -11,6 +11,8 @@ class MealsDetails extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
+    final favoriteMeals = ref.watch(favoriteMealsProvider);
+    final isFavorite = favoriteMeals.contains(meal);
     final String ingredients = meal.ingredients.join('\n');
     final String steps = meal.steps.join('\n');
 
@@ -41,19 +43,34 @@ class MealsDetails extends ConsumerWidget {
                 ),
               );
             },
-            icon: Icon(Icons.star),
+            icon: AnimatedSwitcher(
+              duration: Duration(milliseconds: 300),
+              transitionBuilder: (child, animation) {
+                return RotationTransition(
+                  turns: Tween(begin: 0.5, end: 1.0).animate(animation),
+                  child: child,
+                );
+              },
+              child: Icon(
+                isFavorite ? Icons.star : Icons.star_border,
+                key: ValueKey<bool>(isFavorite),
+              ),
+            ),
           ),
         ],
       ),
       body: ListView(
         padding: EdgeInsets.all(16),
         children: [
-          FadeInImage(
-            placeholder: MemoryImage(kTransparentImage),
-            image: NetworkImage(meal.imageUrl),
-            fit: BoxFit.cover,
-            height: 500,
-            width: double.infinity,
+          Hero(
+            tag: meal.id,
+            child: FadeInImage(
+              placeholder: MemoryImage(kTransparentImage),
+              image: NetworkImage(meal.imageUrl),
+              fit: BoxFit.cover,
+              height: 500,
+              width: double.infinity,
+            ),
           ),
           SizedBox(height: 20),
           Text(
